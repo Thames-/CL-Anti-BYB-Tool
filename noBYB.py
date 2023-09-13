@@ -227,7 +227,7 @@ def evaluate_listing(title_text, description,price):
     for regex in descr_regex_max_fee:
         result = None
         result = re.search(regex,description)
-        print(regex)
+        
         if result is None:
             continue
 
