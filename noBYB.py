@@ -19,6 +19,12 @@ async def main():
     context = await browser.createIncognitoBrowserContext()
     page = await context.newPage()
 
+    # DEBUG
+    #LINK = 'https://atlanta.craigslist.org/nat/pet/d/stockbridge-bully-pit-pups-top-quality/7659504080.html'
+    #title_text, description, price = await get_page_contents(context,LINK)
+    #is_BYB = evaluate_listing(title_text, description, price)
+    #print('is_BYB',is_BYB)
+
     # clear the file
     with open('listings.txt','w') as fp:
         fp.close()
@@ -186,7 +192,7 @@ def evaluate_listing(title_text, description,price):
     # Process Listing Description
 
     # Description - Flagged keywords
-    descr_flags = ['micro','pocket','selling','sell','sale','buy','not free','price','negotiate','available','exotic','deposit','reserve','obo','or best offer','serious inquiries','serious offers','buyer','buyers']
+    descr_flags = ['micro','pocket','selling','sell','sale','buy','not free','price','negotiate','available','exotic','deposit','reserve','obo','or best offer','serious inquiries','serious offers','buyer','buyers', 'bred']
 
     description = description.lower()
 
@@ -202,8 +208,8 @@ def evaluate_listing(title_text, description,price):
         r'(\d+.\d+)$', # 100.00$ # in case of idiot
         r'asking (\d+)', # asking 100
         r'asking (\d+.\d+)', # asking 100.00
-        r'(\d.+\d+)', # 100.00
-        r'$(\d.+\d+)', # $100.00
+        r'(\d+.\d+)', # 100.00
+        r'$(\d+.\d+)', # $100.00
         r'boys (\d+)', # boys 100
         r'girls (\d+)', # girls 100
     ]
@@ -221,7 +227,7 @@ def evaluate_listing(title_text, description,price):
     for regex in descr_regex_max_fee:
         result = None
         result = re.search(regex,description)
-
+        print(regex)
         if result is None:
             continue
 
