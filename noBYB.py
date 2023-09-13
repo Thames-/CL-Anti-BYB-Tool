@@ -20,10 +20,10 @@ async def main():
     page = await context.newPage()
 
     # DEBUG
-    #LINK = 'https://atlanta.craigslist.org/nat/pet/d/stockbridge-bully-pit-pups-top-quality/7659504080.html'
-    #title_text, description, price = await get_page_contents(context,LINK)
-    #is_BYB = evaluate_listing(title_text, description, price)
-    #print('is_BYB',is_BYB)
+    LINK = 'https://atlanta.craigslist.org/eat/pet/d/conyers-male-bully-puppy/7663907796.html'
+    title_text, description, price = await get_page_contents(context,LINK)
+    is_BYB = evaluate_listing(title_text, description, price)
+    print('is_BYB',is_BYB)
 
     # clear the file
     with open('listings.txt','w') as fp:
@@ -203,13 +203,13 @@ def evaluate_listing(title_text, description,price):
 
     # determine price from description
     descr_regex_max_fee = [
-        r'$(\d+)', # $100
-        r'(\d+)$', # 100$ in case of idiot
-        r'(\d+.\d+)$', # 100.00$ # in case of idiot
+        r'\$(\d+)', # $100 
+        r'(\d+)\$', # 100$ in case of idiot
+        r'(\d+.\d+)\$', # 100.00$ # in case of idiot
         r'asking (\d+)', # asking 100
         r'asking (\d+.\d+)', # asking 100.00
         r'(\d+.\d+)', # 100.00
-        r'$(\d+.\d+)', # $100.00
+        r'\$(\d+.\d+)', # $100.00
         r'boys (\d+)', # boys 100
         r'girls (\d+)', # girls 100
     ]
@@ -223,11 +223,11 @@ def evaluate_listing(title_text, description,price):
     descr_regex_auto_reject = [
         r'three k' # arbitrary hard coded stuff
     ]
-
+    print(description)
     for regex in descr_regex_max_fee:
         result = None
         result = re.search(regex,description)
-        
+
         if result is None:
             continue
 
