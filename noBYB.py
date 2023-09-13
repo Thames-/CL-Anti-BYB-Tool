@@ -158,7 +158,7 @@ def evaluate_listing(title_text, description,price):
     # Process Listing Title
 
     # Title - Flagged Keywords
-    title_flags = ['sale','sell','selling','exotic','micro']
+    title_flags = ['sale','sell','selling','exotic','micro','pocket','buy']
 
 
     for flag in title_flags:
@@ -186,7 +186,7 @@ def evaluate_listing(title_text, description,price):
     # Process Listing Description
 
     # Description - Flagged keywords
-    descr_flags = ['micro','pocket','selling','sell','sale','not free','price','negotiate','available','exotic','deposit','reserve','obo','or best offer','serious inquiries','serious offers']
+    descr_flags = ['micro','pocket','selling','sell','sale','buy','not free','price','negotiate','available','exotic','deposit','reserve','obo','or best offer','serious inquiries','serious offers','buyer','buyers']
 
     description = description.lower()
 
@@ -197,17 +197,21 @@ def evaluate_listing(title_text, description,price):
 
     # determine price from description
     descr_regex_max_fee = [
-        r'$(\d+)', 
-        r'(\d+)$', # in case of idiot
-        r'asking (\d+)'
-        r'asking (\d+)$' 
+        r'$(\d+)', # $100
+        r'(\d+)$', # 100$ in case of idiot
+        r'(\d+.\d+)$', # 100.00$ # in case of idiot
+        r'asking (\d+)', # asking 100
+        r'asking (\d+.\d+)', # asking 100.00
+        r'(\d.+\d+)', # 100.00
+        r'$(\d.+\d+)', # $100.00
+        r'boys (\d+)', # boys 100
+        r'girls (\d+)', # girls 100
     ]
 
     # "prices listed in the thousands, e.g. 1k, 2k"
     descr_regex_k = [
         r'(\d+)(?: )?k',
         r'(\d+.\d+)(?: )?k',
-
     ]
         
     descr_regex_auto_reject = [
