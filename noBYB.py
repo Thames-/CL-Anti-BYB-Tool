@@ -20,10 +20,10 @@ async def main():
     page = await context.newPage()
 
     # DEBUG
-    LINK = 'https://atlanta.craigslist.org/eat/pet/d/conyers-male-bully-puppy/7663907796.html'
-    title_text, description, price = await get_page_contents(context,LINK)
-    is_BYB = evaluate_listing(title_text, description, price)
-    print('is_BYB',is_BYB)
+    # LINK = 'https://atlanta.craigslist.org/eat/pet/d/conyers-male-bully-puppy/7663907796.html'
+    # title_text, description, price = await get_page_contents(context,LINK)
+    # is_BYB = evaluate_listing(title_text, description, price)
+    # print('is_BYB',is_BYB)
 
     # clear the file
     with open('listings.txt','w') as fp:
@@ -223,7 +223,7 @@ def evaluate_listing(title_text, description,price):
     descr_regex_auto_reject = [
         r'three k' # arbitrary hard coded stuff
     ]
-    print(description)
+
     for regex in descr_regex_max_fee:
         result = None
         result = re.search(regex,description)
